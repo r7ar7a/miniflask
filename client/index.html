@@ -18,9 +18,10 @@
       <input type="submit" id="submitButton"  name="submitButton" value="Elküld">
     </div>
   </form>
+  <button onclick="receive()">Lekér</button>
   <script type='text/javascript'>
-    function objectifyForm(formArray) {//serialize data function
 
+    function objectifyForm(formArray) {//serialize data function
       var returnArray = {};
       for (var i = 0; i < formArray.length; i++){
         returnArray[formArray[i]['name']] = formArray[i]['value'];
@@ -28,14 +29,30 @@
       return returnArray;
     }
 
+    function receive() {
+      $.ajax({
+        type: "get",
+        url: "http://localhost:5000/data",
+        success: function(responseData, textStatus, jqXHR) {
+            alert(responseData)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+      });
+      alert();
+    }
+
     /* attach a submit handler to the form */
     $("#formid").submit(function(event) {
-      /* stop form from submitting normally */
-      event.preventDefault();
-
       /* get the action attribute from the <form action=""> element */
       var form = $(this),
       url = form.attr('action');
+
+      /* stop form from submitting normally */
+      event.preventDefault();
+
 
       postDataObj = objectifyForm($("#formid").serializeArray()) //$("#formid").serialize();
       postData = JSON.stringify(postDataObj);

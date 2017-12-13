@@ -38,7 +38,7 @@ def data():
             with open('data.txt', 'r') as f:
                 line = f.readline()
                 data1, data2 = line.strip().split(SEPARATOR)
-                f.write('\n')
+                return Response(json.dumps({'data1': data1, 'data2': data2}))
         except Exception as e:
             print(e)
             response = json.dumps({'error': 'NO DATA'})
