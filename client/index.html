@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+<body>
+  <form id="formid" action="http://localhost:5000/data" title="" method="post">
+    <div>
+      <label class="title">1. Adat</label>
+      <input type="text" id="data1" name="input1" >
+    </div>
+    <div>
+      <label class="title">2. Adat</label>
+      <input type="text" id="data2" name="input2" >
+    </div>
+    <div>
+      <input type="submit" id="submitButton"  name="submitButton" value="Elküld">
+    </div>
+  </form>
+  <script type='text/javascript'>
+    function objectifyForm(formArray) {//serialize data function
+
+      var returnArray = {};
+      for (var i = 0; i < formArray.length; i++){
+        returnArray[formArray[i]['name']] = formArray[i]['value'];
+      }
+      return returnArray;
+    }
+
+    /* attach a submit handler to the form */
+    $("#formid").submit(function(event) {
+      /* stop form from submitting normally */
+      event.preventDefault();
+
+      /* get the action attribute from the <form action=""> element */
+      var form = $(this),
+      url = form.attr('action');
+
+      postDataObj = objectifyForm($("#formid").serializeArray()) //$("#formid").serialize();
+      postData = JSON.stringify(postDataObj);
+      $.ajax({
+        type: "post",
+        url: url,
+        data: postData,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(responseData, textStatus, jqXHR) {
+            alert("data saved")
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
