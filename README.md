@@ -2,7 +2,13 @@
 
 példa kód. Remélem segít.
 
-Python függősé telepítése:
+## Python függőségek telepítése:
 ```
-pip install flask
+./install_dependencies.sh
 ```
+## Futtatás
+```
+./run_server.sh
+```
+## Kliens
+http://localhost:5000/
