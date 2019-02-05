@@ -5,7 +5,7 @@
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 </head>
 <body>
-  <form id="formid" action="http://localhost:5000/data" title="" method="post">
+  <form id="formid" action="http://localhost:5000/simple_data" title="" method="post">
     <div>
       <label class="title">1. Adat</label>
       <input type="text" id="data1" name="input1" >
@@ -32,7 +32,7 @@
     function receive() {
       $.ajax({
         type: "get",
-        url: "http://localhost:5000/data",
+        url: "http://localhost:5000/simple_data",
         success: function(responseData, textStatus, jqXHR) {
             alert(responseData)
         },

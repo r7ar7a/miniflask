@@ -44,3 +44,21 @@ def data():
             response = json.dumps({'error': 'NO DATA'})
             return Response(response, status=503, mimetype='application/json')
         return Response(json.dumps([data1, data2]), mimetype='application/json')
+
+
+@APPLICATION.route('/simple_data', methods=['GET', 'POST'])
+def simple_data():
+    if request.method == 'POST':
+        data = request.get_json()
+        input1 = data['input1']
+        input2 = data['input2']
+        with open('data.txt', 'w') as f:
+            f.write(SEPARATOR.join([input1, input2]))
+            f.write('\n')
+        return Response(json.dumps('SUCCESS'), mimetype='application/json')
+    else:  # request.method == 'GET':
+        with open('data.txt', 'r') as f:
+            line = f.readline()
+            data1, data2 = line.strip().split(SEPARATOR)
+            return Response(json.dumps({'data1': data1, 'data2': data2}))
+        return Response(json.dumps([data1, data2]), mimetype='application/json')
